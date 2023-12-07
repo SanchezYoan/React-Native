@@ -1,24 +1,26 @@
-import React, { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import React from "react";
 
 export default function App() {
-  const [count, setCount] = useState(0);
   return (
-    <View style={styles.container}>
-      <Text style={styles.counter}>Bonjour {count}</Text>
-      <Button title="+1" onPress={() => setCount(count + 1)}></Button>
+    <View style={styles.wrapper}>
+      <View style={styles.viewOne}>
+        <Text style={styles.textOne}>Text one</Text>
+        <Text style={styles.textOne}>Text one</Text>
+        <Text style={styles.textOne}>Text one</Text>
+      </View>
+      <View style={styles.viewTwo}>
+        <Text style={styles.textTwo}>Text Two</Text>
+        <Text>Text Two</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  counter: {
-    fontSize: 40,
-  },
+  wrapper: { marginTop: 50, flexDirection: "column" },
+  viewOne: { backgroundColor: "green" },
+  textOne: { fontFamily: "Cochin" },
+  viewTwo: { backgroundColor: "red" },
+  textTwo: { fontFamily: "Cochin", fontSize: 20, fontWeight: "bold" },
 });
