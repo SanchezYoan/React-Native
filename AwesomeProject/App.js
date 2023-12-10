@@ -1,48 +1,57 @@
-import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import React, { useState } from "react";
 
 export default function App() {
-  const obj = {
-    name: "Spiderman",
-    age: 28,
-  };
+  const obj = [
+    { id: "1", name: "Stan", age: 45 },
+    { id: "2", name: "Francine", age: 45 },
+    { id: "3", name: "hayley", age: 18 },
+    { id: "4", name: "Steve", age: 15 },
+    { id: "5", name: "Roger", age: 1020 },
+    { id: "6", name: "Klaus", age: 30 },
+    { id: "7", name: "Homer", age: 35 },
+    { id: "8", name: "Bart", age: 11 },
+  ];
 
-  const [name, setName] = useState();
-  const [age, setAge] = useState();
+  const [family, setFamily] = useState(obj);
 
+  const renderItem = ({ item }) => (
+    <View style={styles.viewList}>
+      <Text style={styles.text}>
+        <Text style={styles.textBold}>Nom: </Text>
+        {item.name}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.textBold}>Age: </Text>
+        {item.age}
+      </Text>
+    </View>
+  );
   return (
     <View style={styles.wrapper}>
-      <Text>
-        Nom: {name} | Age: {age}
-      </Text>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Indiquez votre nom"
-        onChangeText={(text) => setName(text)}
+      <FlatList
+        data={family}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
       />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Indiquez votre âge"
-        onChangeText={(val) => setAge(val)}
-      />
-      <Button title="Submit" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: 50,
-    backgroundColor: "red",
-    alignItems: "center",
-    height: 200,
+    padding: 20,
   },
-  textInput: {
-    height: 40,
-    borderColor: "grey",
-    backgroundColor: "white",
-    borderWidth: 1,
-    padding: 10,
-    width: "90%",
+  viewList: {
+    marginTop: 30,
+    backgroundColor: "purple",
+    padding: 19,
+  },
+  text: {
+    color: "#fff",
+    fontSize: 20,
+  },
+  textBold: {
+    fontWeight: "bold",
   },
 });
