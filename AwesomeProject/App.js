@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  RefreshControl,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 
 export default function App() {
@@ -14,6 +22,7 @@ export default function App() {
   ];
 
   const [family, setFamily] = useState(obj);
+  const [refreshing, setRefreshing] = useState(false);
 
   const renderItem = ({ item }) => (
     <View style={styles.viewList}>
@@ -27,20 +36,51 @@ export default function App() {
       </Text>
     </View>
   );
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    Alert.alert("Info", "La liste est rafraîchie", [
+      {
+        text: "OK",
+        onPress: () => console.warn("La liste est rafraîchie"),
+        style: "cancel",
+      },
+    ]);
+    setRefreshing(false);
+    // setTimeout(() => {}, 2000);
+  };
   return (
     <View style={styles.wrapper}>
-      <FlatList
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {family.map((member) => {
+          return (
+            <View key={member.id} style={styles.list}>
+              <Text style={styles.listText}>
+                Nom: {member.name} | Age: {member.age}
+              </Text>
+            </View>
+          );
+        })}
+        {/* <FlatList
         data={family}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-      />
+      /> */}
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 20,
+    flex: 1,
+    padding: 10,
+    alignItems: "stretch",
+    justifyContent: "flex-end",
   },
   viewList: {
     marginTop: 30,
@@ -53,5 +93,15 @@ const styles = StyleSheet.create({
   },
   textBold: {
     fontWeight: "bold",
+  },
+  list: {
+    backgroundColor: "deepskyblue",
+    alignItems: "center",
+    margin: 10,
+  },
+  listText: {
+    padding: 10,
+    fontSize: 40,
+    color: "white",
   },
 });
