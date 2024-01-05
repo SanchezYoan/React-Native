@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   ScrollView,
   RefreshControl,
   Alert,
@@ -21,21 +20,9 @@ export default function App() {
     { id: "8", name: "Bart", age: 11 },
   ];
 
+  const myObj = { age: 20, name: "toto" };
   const [family, setFamily] = useState(obj);
   const [refreshing, setRefreshing] = useState(false);
-
-  const renderItem = ({ item }) => (
-    <View style={styles.viewList}>
-      <Text style={styles.text}>
-        <Text style={styles.textBold}>Nom: </Text>
-        {item.name}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.textBold}>Age: </Text>
-        {item.age}
-      </Text>
-    </View>
-  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -53,7 +40,11 @@ export default function App() {
     <View style={styles.wrapper}>
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={["#ff1493"]}
+          />
         }
       >
         {family.map((member) => {
@@ -65,11 +56,6 @@ export default function App() {
             </View>
           );
         })}
-        {/* <FlatList
-        data={family}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      /> */}
       </ScrollView>
     </View>
   );
